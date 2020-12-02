@@ -1,4 +1,4 @@
-import React, {ReactNode, createContext} from 'react'
+import React, {ReactNode, createContext, useState, useEffect} from 'react'
 import { useQuery } from 'urql'
 
 import {Player} from './interfaces'
@@ -23,17 +23,30 @@ const PlayerQuery = `
   }
 `
 
-export const PlayerContext = createContext<Player[] | null>(null);
+interface PlayersContext {
+  players: Player[] | null,
+  setPlayers?: Function
+}
+
+export const PlayerContext = createContext<PlayersContext>({players: null});
 
 export const PlayersProvider = ({children}: {children: ReactNode}) => {
-  const [res, reexecuteQuery] = useQuery({query: PlayerQuery})
+  const [res] = useQuery({query: PlayerQuery})
+  const [players, setPlayers] = useState(null)
+
   const {data, fetching, error} = res
+
+  useEffect(() => {
+    if (data && data.players) {
+      setPlayers(data.players)
+    }
+  }, [data])
 
   if (fetching) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
 
   return (
-    <PlayerContext.Provider value={data.players}>
+    <PlayerContext.Provider value={{players, setPlayers}}>
       {children}
     </PlayerContext.Provider>
   )

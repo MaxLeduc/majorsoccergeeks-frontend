@@ -1,4 +1,4 @@
-import {Player} from '../../common/data/interfaces' 
+import {Player} from '../../../../common/data/interfaces' 
 
 export const descendingComparator = (a: Player, b: Player, orderBy: keyof Player): number => {
   let firstValue = a[orderBy]
