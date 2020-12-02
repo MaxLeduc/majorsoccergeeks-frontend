@@ -7,11 +7,10 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import {Player} from '../../../../common/data/interfaces'
 
-import {useStyles} from '../../styles'
-import {Order} from '../../interfaces'
+import {Order} from '../Table/interfaces'
+import {FilterIconHiddenLabel} from './styles'
 
 interface TableHeadProps {
-  classes: ReturnType<typeof useStyles>;
   numSelected: number;
   onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Player) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -26,7 +25,7 @@ interface HeadCell {
 }
 
 export const EnhancedTableHead = (props: TableHeadProps) => {
-  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
   const createSortHandler = (property: keyof Player) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property);
   };
@@ -64,9 +63,9 @@ export const EnhancedTableHead = (props: TableHeadProps) => {
             >
               {headCell.label}
               {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>
+                <FilterIconHiddenLabel>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
+                </FilterIconHiddenLabel>
               ) : null}
             </TableSortLabel>
           </TableCell>
