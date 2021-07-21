@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/majorsoccergeeks-frontend/static/css/main.f48b7081.chunk.css",
+    "main.js": "/majorsoccergeeks-frontend/static/js/main.a60febe3.chunk.js",
+    "main.js.map": "/majorsoccergeeks-frontend/static/js/main.a60febe3.chunk.js.map",
+    "runtime-main.js": "/majorsoccergeeks-frontend/static/js/runtime-main.659c0fa8.js",
+    "runtime-main.js.map": "/majorsoccergeeks-frontend/static/js/runtime-main.659c0fa8.js.map",
+    "static/js/2.6198defc.chunk.js": "/majorsoccergeeks-frontend/static/js/2.6198defc.chunk.js",
+    "static/js/2.6198defc.chunk.js.map": "/majorsoccergeeks-frontend/static/js/2.6198defc.chunk.js.map",
+    "static/js/3.4eded1b9.chunk.js": "/majorsoccergeeks-frontend/static/js/3.4eded1b9.chunk.js",
+    "static/js/3.4eded1b9.chunk.js.map": "/majorsoccergeeks-frontend/static/js/3.4eded1b9.chunk.js.map",
+    "index.html": "/majorsoccergeeks-frontend/index.html",
+    "static/css/main.f48b7081.chunk.css.map": "/majorsoccergeeks-frontend/static/css/main.f48b7081.chunk.css.map",
+    "static/js/2.6198defc.chunk.js.LICENSE.txt": "/majorsoccergeeks-frontend/static/js/2.6198defc.chunk.js.LICENSE.txt",
+    "static/media/hero.b6231777.jpeg": "/majorsoccergeeks-frontend/static/media/hero.b6231777.jpeg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.659c0fa8.js",
+    "static/js/2.6198defc.chunk.js",
+    "static/css/main.f48b7081.chunk.css",
+    "static/js/main.a60febe3.chunk.js"
+  ]
+}
