@@ -25,7 +25,7 @@ const PlayerQuery = `
 
 interface PlayersContext {
   players: Player[] | null,
-  setPlayers?: Function
+  setFilteredPlayers?: Function
 }
 
 export const PlayerContext = createContext<PlayersContext>({players: null});
@@ -33,6 +33,7 @@ export const PlayerContext = createContext<PlayersContext>({players: null});
 export const PlayersProvider = ({children}: {children: ReactNode}) => {
   const [res] = useQuery({query: PlayerQuery})
   const [players, setPlayers] = useState(null)
+  const [filteredPlayers, setFilteredPlayers] = useState([])
 
   const {data, fetching, error} = res
 
@@ -46,7 +47,7 @@ export const PlayersProvider = ({children}: {children: ReactNode}) => {
   if (error) return <p>Oh no... {error.message}</p>;
 
   return (
-    <PlayerContext.Provider value={{players, setPlayers}}>
+    <PlayerContext.Provider value={{players: filteredPlayers.length ? filteredPlayers : players, setFilteredPlayers}}>
       {children}
     </PlayerContext.Provider>
   )

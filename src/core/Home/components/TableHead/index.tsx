@@ -32,7 +32,6 @@ export const EnhancedTableHead = (props: TableHeadProps) => {
 
   const headCells: HeadCell[] = [
     {id: 'firstName', label: 'First Name'},
-    {id: 'lastName', label: 'Last Name'},
     {id: 'baseSalary', label: 'Base Salary'},
     {id: 'guaranteedCompensation', label: 'Guaranteed Compensation'},
     {id: 'club', label: 'Club'},

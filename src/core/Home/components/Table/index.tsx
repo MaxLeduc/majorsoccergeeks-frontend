@@ -69,12 +69,12 @@ export const EnhancedTable = ({players}: {players: Player[]} ) => {
 
   const isSelected = (id: string) => selected.indexOf(id) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, players.length - page * rowsPerPage);
+  const currencyFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
 
   return (
     <TableWrapper>
       <StyledPaper>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar selected={selected} />
         <TableContainer>
           <StyledTable
             stickyHeader
@@ -121,21 +121,15 @@ export const EnhancedTable = ({players}: {players: Player[]} ) => {
                         />
                       </TableCell>
                       <TableCell align="right" id={labelId} scope="row">
-                        {firstName}
+                        {firstName} {lastName}
                       </TableCell>
-                      <TableCell align="right">{lastName}</TableCell>
-                      <TableCell align="right">{`$${baseSalary.toLocaleString()}`}</TableCell>
-                      <TableCell align="right">{`$${guaranteedCompensation.toLocaleString()}`}</TableCell>
+                      <TableCell align="right">{`${currencyFormatter.format(baseSalary)}`}</TableCell>
+                      <TableCell align="right">{`${currencyFormatter.format(guaranteedCompensation)}`}</TableCell>
                       <TableCell align="right">{club.name}</TableCell>
                       <TableCell align="right">{positions.map(({name}) => name).join(', ')}</TableCell>
                     </TableRow>
                   );
                 })}
-              {emptyRows > 0 && (
-                <TableRow>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
             </TableBody>
           </StyledTable>
         </TableContainer>
