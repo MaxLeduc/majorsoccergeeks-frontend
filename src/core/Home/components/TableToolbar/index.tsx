@@ -22,7 +22,8 @@ const hasValue = (player: Player, value: string): boolean => {
 
 export const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
   const {players, setFilteredPlayers} = useContext(PlayerContext);
-  const {selected} = props
+  // todo: do something with the selected players?
+  // const {selected} = props
 
   const debouncedFunction = debounce((value) => {
     searchPlayers(value);
@@ -38,8 +39,6 @@ export const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
       setFilteredPlayers(output)
     }
   }
-
-  console.log(selected)
 
   return (
     <StyledToolbar>
