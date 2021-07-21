@@ -74,7 +74,7 @@ export const EnhancedTable = ({players}: {players: Player[]} ) => {
   return (
     <TableWrapper>
       <StyledPaper>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar selected={selected} />
         <TableContainer>
           <StyledTable
             stickyHeader
