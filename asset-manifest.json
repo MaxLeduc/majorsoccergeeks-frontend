@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/majorsoccergeeks-frontend/static/css/main.f48b7081.chunk.css",
-    "main.js": "/majorsoccergeeks-frontend/static/js/main.885c27a0.chunk.js",
-    "main.js.map": "/majorsoccergeeks-frontend/static/js/main.885c27a0.chunk.js.map",
+    "main.js": "/majorsoccergeeks-frontend/static/js/main.caf99c7e.chunk.js",
+    "main.js.map": "/majorsoccergeeks-frontend/static/js/main.caf99c7e.chunk.js.map",
     "runtime-main.js": "/majorsoccergeeks-frontend/static/js/runtime-main.659c0fa8.js",
     "runtime-main.js.map": "/majorsoccergeeks-frontend/static/js/runtime-main.659c0fa8.js.map",
     "static/js/2.a37ceef9.chunk.js": "/majorsoccergeeks-frontend/static/js/2.a37ceef9.chunk.js",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.659c0fa8.js",
     "static/js/2.a37ceef9.chunk.js",
     "static/css/main.f48b7081.chunk.css",
-    "static/js/main.885c27a0.chunk.js"
+    "static/js/main.caf99c7e.chunk.js"
   ]
 }
