@@ -1,6 +1,8 @@
 import React, {ReactNode, createContext, useState, useEffect} from 'react'
 import { useQuery } from 'urql'
 
+import {Loading} from '../../core/Loading'
+
 import {Player} from './interfaces'
 
 const PlayerQuery = `
@@ -43,7 +45,7 @@ export const PlayersProvider = ({children}: {children: ReactNode}) => {
     }
   }, [data])
 
-  if (fetching) return <p>Loading...</p>;
+  if (fetching) return <Loading />;
   if (error) return <p>Oh no... {error.message}</p>;
 
   return (

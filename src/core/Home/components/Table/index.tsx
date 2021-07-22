@@ -8,8 +8,8 @@ import TablePagination from '@material-ui/core/TablePagination';
 
 import {Player} from '../../../../common/data/interfaces'
 
-import {EnhancedTableHead} from '../TableHead'
-import {EnhancedTableToolbar} from '../TableToolbar'
+import {EnhancedTableHead} from './components/TableHead'
+import {EnhancedTableToolbar} from './components/TableToolbar'
 import {TableWrapper, StyledPaper, StyledTable} from './styles'
 import {Order} from './interfaces'
 import {getComparator, getClubUrl, getPlayerUrl, stableSort} from './helpers'
