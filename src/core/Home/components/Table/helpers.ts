@@ -14,6 +14,12 @@ export const descendingComparator = (a: Player, b: Player, orderBy: keyof Player
     secondValue = b[orderBy].map(position => position.name).join('')
   }
 
+  // ! salaries are coming as string instead of numbers
+  if (orderBy === 'baseSalary' || orderBy === 'guaranteedCompensation') {
+    firstValue = Number(a[orderBy])
+    secondValue = Number(b[orderBy])
+  }
+
   if (secondValue < firstValue) {
     return -1;
   }
@@ -35,6 +41,7 @@ export const getComparator = (order: Order, orderBy: keyof Player): (a: Player, 
 
 export const stableSort = (array: Player[], comparator: (a: Player, b: Player) => number) => {
   const stabilizedThis = array.map((el, index) => [el, index] as [Player, number]);
+
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;
