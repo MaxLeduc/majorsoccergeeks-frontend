@@ -1,6 +1,6 @@
 import { createClient } from 'urql';
 
 export const graphqlClient = createClient({
-  url: 'http://localhost:8000/graphql/',
+  url: `${process.env.REACT_APP_BASE_API_URL}/graphql/`,
 });
 
