@@ -51,7 +51,13 @@ export const stableSort = (array: Player[], comparator: (a: Player, b: Player) =
 }
 
 export const getPlayerUrl = (firstName: string, lastName: string) => {
-  const fullName = `${firstName}${lastName ? '-' + lastName : ''}`
+  let fullName = `${firstName}${lastName ? '-' + lastName : ''}`
+
+  if (fullName.includes("\"")) {
+    const names = fullName.split("\"")
+
+    fullName = (names[0] + names[names.length - 1]).replace(' ', '')
+  }
 
   return `
     https://www.mlssoccer.com/players/${fullName.toLowerCase().replace(' ', '-')}
