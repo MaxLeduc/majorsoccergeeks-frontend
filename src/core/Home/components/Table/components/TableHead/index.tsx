@@ -5,9 +5,9 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import {Player} from '../../../../common/data/interfaces'
+import {Player} from '../../../../../../common/data/interfaces'
 
-import {Order} from '../Table/interfaces'
+import {Order} from '../../interfaces'
 import {FilterIconHiddenLabel} from './styles'
 
 interface TableHeadProps {

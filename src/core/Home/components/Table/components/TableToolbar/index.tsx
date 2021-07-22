@@ -2,8 +2,8 @@ import React, {useContext} from 'react'
 import TextField from '@material-ui/core/TextField';
 import debounce from "lodash/debounce";
 
-import {PlayerContext} from '../../../../common/data/PlayersProvider'
-import {Player} from '../../../../common/data/interfaces'
+import {PlayerContext} from '../../../../../../common/data/PlayersProvider'
+import {Player} from '../../../../../../common/data/interfaces'
 
 import {StyledToolbar, SearchFieldWrapper, StyledIcon} from './styled'
 
