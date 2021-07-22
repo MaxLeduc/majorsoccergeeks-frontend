@@ -10,9 +10,9 @@ export const NavBar = styled.div`
 `
 
 export const HeroImage = styled.div`
-  height: 60vh;
+  height: 40vh;
   background-image: url(${heroImage});
-  background-position: 40% 60%;
+  background-position: 40% 70%;
   background-repeat: no-repeat;
   background-attachment: fixed;
 `

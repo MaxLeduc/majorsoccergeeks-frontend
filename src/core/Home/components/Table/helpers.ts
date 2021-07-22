@@ -49,3 +49,17 @@ export const stableSort = (array: Player[], comparator: (a: Player, b: Player) =
   });
   return stabilizedThis.map((el) => el[0]);
 }
+
+export const getPlayerUrl = (firstName: string, lastName: string) => {
+  const fullName = `${firstName}${lastName ? '-' + lastName : ''}`
+
+  return `
+    https://www.mlssoccer.com/players/${fullName.toLowerCase().replace(' ', '-')}
+  `
+}
+
+export const getClubUrl = (club: string) => {
+  return `
+    https://www.mlssoccer.com/clubs/${club.toLowerCase().replace(' ', '-')}
+  `
+}
