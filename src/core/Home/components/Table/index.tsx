@@ -12,10 +12,11 @@ import {EnhancedTableHead} from '../TableHead'
 import {EnhancedTableToolbar} from '../TableToolbar'
 import {TableWrapper, StyledPaper, StyledTable} from './styles'
 import {Order} from './interfaces'
-import {getComparator, stableSort} from './helpers'
+import {getComparator, getClubUrl, getPlayerUrl, stableSort} from './helpers'
 
 const DEFAULT_ROWS_PER_PAGE = 25
 
+// todo: replace state by a reducer and add `useCallback` to functions defined in the component
 export const EnhancedTable = ({players}: {players: Player[]} ) => {
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<keyof Player>('id');
@@ -27,7 +28,7 @@ export const EnhancedTable = ({players}: {players: Player[]} ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
-  };
+  }
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -38,7 +39,7 @@ export const EnhancedTable = ({players}: {players: Player[]} ) => {
     setSelected([]);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+  const selectRow = (event: React.MouseEvent<unknown>, name: string) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected: string[] = [];
 
@@ -107,7 +108,6 @@ export const EnhancedTable = ({players}: {players: Player[]} ) => {
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -118,14 +118,17 @@ export const EnhancedTable = ({players}: {players: Player[]} ) => {
                         <Checkbox
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': labelId }}
+                          onClick={(event) => selectRow(event, row.id)}
                         />
                       </TableCell>
                       <TableCell align="right" id={labelId} scope="row">
-                        {firstName} {lastName}
+                        <a rel="noopener noreferrer" target="_blank" href={getPlayerUrl(firstName, lastName)}>{firstName} {lastName}</a>
                       </TableCell>
                       <TableCell align="right">{`${currencyFormatter.format(baseSalary)}`}</TableCell>
                       <TableCell align="right">{`${currencyFormatter.format(guaranteedCompensation)}`}</TableCell>
-                      <TableCell align="right">{club.name}</TableCell>
+                      <TableCell align="right">
+                        <a rel="noopener noreferrer" target="_blank" href={getClubUrl(club.name)}>{club.name}</a>
+                      </TableCell>
                       <TableCell align="right">{positions.map(({name}) => name).join(', ')}</TableCell>
                     </TableRow>
                   );
