@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useReducer, useCallback, useEffect } from 'react'
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -6,45 +6,150 @@ import TableRow from '@material-ui/core/TableRow';
 import Checkbox from '@material-ui/core/Checkbox';
 import TablePagination from '@material-ui/core/TablePagination';
 
-import {Player} from '../../../../common/data/interfaces'
+import {Club, Player, Position} from '../../../../common/data/types'
 
 import {EnhancedTableHead} from './components/TableHead'
 import {EnhancedTableToolbar} from './components/TableToolbar'
 import {TableWrapper, StyledPaper, StyledTable} from './styles'
-import {Order} from './interfaces'
-import {getComparator, getClubUrl, getPlayerUrl, stableSort} from './helpers'
+import {EnhancedTableReducerActions, EnhancedTableReducerState, Order} from './types'
+import {currencyFormatter, getComparator, getClubUrl, getPlayerUrl, stableSort, getFilteredPlayers} from './helpers'
 
 const DEFAULT_ROWS_PER_PAGE = 25
 
-// todo: replace state by a reducer and add `useCallback` to functions defined in the component
+const EnhancedTableInitialState = {
+  players: [] as Player[],
+  order: 'asc' as Order,
+  orderBy: 'id' as keyof Player,
+  selected: [] as string[],
+  page: 0,
+  rowsPerPage: DEFAULT_ROWS_PER_PAGE,
+  query: {
+    search: '',
+    clubFilter: '',
+    positionFilter: ''
+  },
+  clubs: new Map() as Map<string, Club>,
+  positions: new Map() as Map<string, Position>
+}
+
+const EnhancedTableReducer = (state: EnhancedTableReducerState, action: EnhancedTableReducerActions) => {
+  switch (action.type) {
+    case 'setPlayers':
+      const clubs = new Map()
+      const positions = new Map()
+
+      action.payload.forEach(player => {
+        const {club, positions: playerPositions} = player
+
+        if (!clubs.get(club.name)) {
+          clubs.set(club.name, club)
+        }
+
+        playerPositions.forEach(position => {
+          if (!positions.get(position.name)) {
+            positions.set(position.name, position)
+          }
+        })
+      })
+
+      return {
+        ...state,
+        players: action.payload,
+        clubs,
+        positions
+      }
+    case 'setOrder':
+      return {
+        ...state,
+        order: action.payload.order,
+        orderBy: action.payload.orderBy
+      }
+    case 'setSelected':
+      return {
+        ...state,
+        selected: action.payload
+      }
+    case 'setPage':
+      return {
+        ...state,
+        page: action.payload
+      }
+    case 'setRowsPerPage':
+      return {
+        ...state,
+        page: action.payload.page,
+        rowsPerPage: action.payload.rowsPerPage
+      }
+    case 'setSearch':
+      return {
+        ...state,
+        page: 0,
+        query: {
+          ...state.query,
+          search: action.payload
+        }
+      }
+    case 'setClubFilter':
+      return {
+        ...state,
+        page: 0,
+        query: {
+          ...state.query,
+          clubFilter: action.payload
+        }
+      }
+    case 'setPositionsFilter':
+      return {
+        ...state,
+        page: 0,
+        query: {
+          ...state.query,
+          positionFilter: action.payload
+        }
+      }
+    default:
+      return state
+  }  
+}
+
+
+
 export const EnhancedTable = ({players}: {players: Player[]} ) => {
-  const [order, setOrder] = React.useState<Order>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof Player>('id');
-  const [selected, setSelected] = React.useState<string[]>([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(DEFAULT_ROWS_PER_PAGE);
+  const [{
+    order,
+    orderBy,
+    selected,
+    page,
+    rowsPerPage,
+    query,
+    clubs,
+    positions
+  }, dispatch] = useReducer(EnhancedTableReducer, EnhancedTableInitialState)
 
-  const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Player) => {
+  useEffect(() => {
+    dispatch({type: 'setPlayers', payload: players})
+  }, [players])
+
+  const handleRequestSort = useCallback((event: React.MouseEvent<unknown>, property: keyof Player) => {
     const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  }
+    dispatch({type: 'setOrder', payload: { order: isAsc ? 'desc' : 'asc', orderBy: property }});
+  }, [order, orderBy])
 
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSelectAllClick = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       const newSelecteds = players.map((n) => n.id);
-      setSelected(newSelecteds);
+      dispatch({type: 'setSelected', payload: newSelecteds});
       return;
     }
-    setSelected([]);
-  };
+    dispatch({type: 'setSelected', payload: []});
+  }, [players])
 
-  const selectRow = (event: React.MouseEvent<unknown>, name: string) => {
-    const selectedIndex = selected.indexOf(name);
+  const selectRow = useCallback((id: string) => {
+    const selectedIndex = selected.indexOf(id);
     let newSelected: string[] = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -56,26 +161,23 @@ export const EnhancedTable = ({players}: {players: Player[]} ) => {
       );
     }
 
-    setSelected(newSelected);
-  };
+    dispatch({type: 'setSelected', payload: newSelected});
+  }, [selected])
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
+  const handleChangePage = useCallback((event: unknown, newPage: number) => {
+    dispatch({type: 'setPage', payload: newPage});
+  }, [])
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  const handleChangeRowsPerPage = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({type: 'setRowsPerPage', payload: { page: 0, rowsPerPage: parseInt(event.target.value, 10)}});
+  }, [])
 
-  const isSelected = (id: string) => selected.indexOf(id) !== -1;
-
-  const currencyFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
+  const playersToDisplay = stableSort(players, getComparator(order, orderBy)).filter(player => getFilteredPlayers(player, query))
 
   return (
     <TableWrapper>
       <StyledPaper>
-        <EnhancedTableToolbar selected={selected} />
+        <EnhancedTableToolbar selected={selected} dispatch={dispatch} query={query} clubs={clubs} positions={positions} />
         <TableContainer>
           <StyledTable
             stickyHeader
@@ -91,10 +193,9 @@ export const EnhancedTable = ({players}: {players: Player[]} ) => {
               rowCount={players.length}
             />
             <TableBody>
-              {stableSort(players, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              {playersToDisplay.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row: Player, index: number) => {
-                  const isItemSelected = isSelected(row.id);
+                  const isItemSelected = selected.indexOf(row.id) !== -1;
                   const labelId = `enhanced-table-checkbox-${index}`;
                   const {
                     firstName,
@@ -102,7 +203,7 @@ export const EnhancedTable = ({players}: {players: Player[]} ) => {
                     baseSalary,
                     guaranteedCompensation,
                     club,
-                    positions
+                    positions: playerPositions
                   } = row
 
                   return (
@@ -118,7 +219,7 @@ export const EnhancedTable = ({players}: {players: Player[]} ) => {
                         <Checkbox
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': labelId }}
-                          onClick={(event) => selectRow(event, row.id)}
+                          onClick={() => selectRow(row.id)}
                         />
                       </TableCell>
                       <TableCell align="right" id={labelId} scope="row">
@@ -129,7 +230,7 @@ export const EnhancedTable = ({players}: {players: Player[]} ) => {
                       <TableCell align="right">
                         <a rel="noopener noreferrer" target="_blank" href={getClubUrl(club.name)}>{club.name}</a>
                       </TableCell>
-                      <TableCell align="right">{positions.map(({name}) => name).join(', ')}</TableCell>
+                      <TableCell align="right">{playerPositions.map(({name}) => name).join(', ')}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -139,7 +240,7 @@ export const EnhancedTable = ({players}: {players: Player[]} ) => {
         <TablePagination
           rowsPerPageOptions={[DEFAULT_ROWS_PER_PAGE, 50, 100]}
           component="div"
-          count={players.length}
+          count={playersToDisplay.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}

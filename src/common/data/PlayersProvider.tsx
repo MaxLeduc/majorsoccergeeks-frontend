@@ -3,7 +3,7 @@ import { useQuery } from 'urql'
 
 import {Loading} from '../../core/Loading'
 
-import {Player} from './interfaces'
+import {Player} from './types'
 
 const PlayerQuery = `
   query {

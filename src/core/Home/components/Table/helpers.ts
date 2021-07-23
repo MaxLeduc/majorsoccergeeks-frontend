@@ -1,4 +1,6 @@
-import {Player} from '../../../../common/data/interfaces' 
+import {Player} from '../../../../common/data/types' 
+
+import {EnhancedTableQuery} from './types'
 
 export const descendingComparator = (a: Player, b: Player, orderBy: keyof Player): number => {
   let firstValue = a[orderBy]
@@ -68,4 +70,43 @@ export const getClubUrl = (club: string) => {
   return `
     https://www.mlssoccer.com/clubs/${club.toLowerCase().replace(' ', '-')}
   `
+}
+
+export const currencyFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
+
+export const playerHasSearchValue = (player: Player, value: string): boolean => {
+  const {firstName, lastName, club: {name: clubName}, positions} = player
+  const searchString = firstName + lastName + clubName + positions.map(position => position.name).join(',')
+  const search_values = value.split(' ')
+  const matches = search_values.filter(val => searchString.toLowerCase().includes(val.toLowerCase())).length
+
+  return matches === search_values.length
+}
+
+export const getFilteredPlayers = (player: Player, query: EnhancedTableQuery) => {
+  const {search, clubFilter, positionFilter} = query
+  const conditions: boolean[] = []
+
+  if (search) {
+    conditions.push(playerHasSearchValue(player, search))
+  }
+
+  if (clubFilter) {
+    conditions.push(player.club.name === clubFilter)
+  }
+
+  if (positionFilter) {
+    let hasPosition = false
+
+    player.positions.forEach((position) => {
+      if (position.name === positionFilter) {
+        hasPosition = true
+        return
+      }
+    })
+
+    conditions.push(hasPosition)
+  }
+
+  return !conditions.filter(condition => !condition).length
 }
