@@ -18,6 +18,7 @@ export type EnhancedTableReducerState = {
   query: EnhancedTableQuery
   clubs: Map<string, Club>
   positions: Map<string, Position>
+  showAggregate: boolean
 }
 
 export type EnhancedTableReducerActions =
@@ -29,3 +30,4 @@ export type EnhancedTableReducerActions =
   | {type: 'setSearch', payload: string}
   | {type: 'setClubFilter', payload: string}
   | {type: 'setPositionsFilter', payload: string}
+  | {type: 'showAggregate', payload: boolean}

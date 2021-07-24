@@ -1,6 +1,6 @@
 import React from 'react'
 
-import soccerBall from './assets/soccer-ball.png'
+import soccerBall from '../../common/assets/soccer-ball.png'
 import { LoadingIcon, IconWrapper } from './styles'
 
 export const Loading = () => {
