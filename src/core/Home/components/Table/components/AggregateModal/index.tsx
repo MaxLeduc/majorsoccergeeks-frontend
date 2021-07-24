@@ -20,7 +20,6 @@ type AggregateModalProps = {
   closeModal: () => void
 }
 
-// first value is base salary and second one is guaranteed compensation
 type AggregateRow = {[key: string]: string | number}
 
 type Aggregate = {[key: string]: AggregateRow }
@@ -34,7 +33,6 @@ const getAggregate = (selectedPlayers: Player[]) => {
   }
 
   selectedPlayers.forEach((player) => {
-    // todo: add which player is highest and lowest
     const { baseSalary, guaranteedCompensation, firstName, lastName, positions } = player
     const playerSalary = Number(baseSalary)
     const playerCompensation = Number(guaranteedCompensation)

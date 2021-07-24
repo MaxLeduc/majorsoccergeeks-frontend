@@ -32,8 +32,6 @@ export const EnhancedTableToolbar = ({dispatch, query, clubs, positions, selecte
     dispatch({type: 'setSearch', payload: value});
   }, 500);
 
-  console.log(selected.length)
-
   return (
     <Toolbar>
       <ToolbarWrapper>

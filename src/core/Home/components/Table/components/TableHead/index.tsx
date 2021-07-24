@@ -38,8 +38,6 @@ export const EnhancedTableHead = (props: TableHeadProps) => {
     {id: 'positions', label: 'Positions'},
   ]
 
-  console.log({rowCount, numSelected})
-
   return (
     <TableHead>
       <TableRow>
