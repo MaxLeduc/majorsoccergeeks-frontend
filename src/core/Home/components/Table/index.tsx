@@ -67,7 +67,6 @@ const EnhancedTableReducer = (state: EnhancedTableReducerState, action: Enhanced
         orderBy: action.payload.orderBy
       }
     case 'setSelected':
-      console.log(action.payload)
       return {
         ...state,
         selected: action.payload
@@ -114,6 +113,16 @@ const EnhancedTableReducer = (state: EnhancedTableReducerState, action: Enhanced
       return {
         ...state,
         showAggregate: action.payload
+      }
+    case 'clearAll':
+      return {
+        ...state,
+        query:  {
+          search: '',
+          clubFilter: '',
+          positionFilter: ''
+        },
+        selected: []
       }
     default:
       return state

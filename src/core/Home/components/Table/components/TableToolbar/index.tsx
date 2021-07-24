@@ -1,6 +1,4 @@
 import React, {useContext} from 'react'
-import TextField from '@material-ui/core/TextField';
-import debounce from "lodash/debounce";
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
@@ -11,7 +9,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import {PlayerContext} from '../../../../../../common/data/PlayersProvider'
 import { Club, Position } from '../../../../../../common/data/types';
 
-import {SearchFieldWrapper, StyledFormControl, DropdownWrapper, ClearButton, SearchWrapper, ToolbarWrapper, InputsWrapper, SelectedIndicator, SelectedButton, SelectedWrapper} from './styles'
+import {StyledTextField, StyledFormControl, DropdownWrapper, ClearButton, SearchWrapper, ToolbarWrapper, InputsWrapper, SelectedIndicator, SelectedButton, SelectedWrapper} from './styles'
 import {EnhancedTableReducerActions, EnhancedTableQuery} from '../../types'
 
 interface EnhancedTableToolbarProps {
@@ -25,12 +23,12 @@ interface EnhancedTableToolbarProps {
 export const EnhancedTableToolbar = ({dispatch, query, clubs, positions, selected}: EnhancedTableToolbarProps) => {
   const {players} = useContext(PlayerContext);
 
-  const debouncedFunction = debounce((value) => {
+  const search = (value: string) => {
     if (!players) return null
     if (!value) return dispatch({type: 'setSearch', payload: ''})
 
-    dispatch({type: 'setSearch', payload: value});
-  }, 500);
+    dispatch({type: 'setSearch', payload: value})
+  }
 
   return (
     <Toolbar>
@@ -55,7 +53,6 @@ export const EnhancedTableToolbar = ({dispatch, query, clubs, positions, selecte
                 })}
               </Select>
             </StyledFormControl>
-            <ClearButton variant="contained" color="primary" onClick={() => dispatch({type: 'setClubFilter', payload: ''})}>Clear</ClearButton>
           </DropdownWrapper>
 
           <DropdownWrapper>
@@ -73,12 +70,10 @@ export const EnhancedTableToolbar = ({dispatch, query, clubs, positions, selecte
                 })}
               </Select>
             </StyledFormControl>
-            <ClearButton variant="contained" color="primary" onClick={() => dispatch({type: 'setPositionsFilter', payload: ''})}>Clear</ClearButton>
           </DropdownWrapper>
 
           <SearchWrapper>
-            <SearchFieldWrapper>
-            <TextField
+            <StyledTextField
               id="standard-basic"
               InputProps={{
                 startAdornment: (
@@ -87,10 +82,12 @@ export const EnhancedTableToolbar = ({dispatch, query, clubs, positions, selecte
                   </InputAdornment>
                 ),
               }}
-              onChange={(e) => debouncedFunction(e.target.value)}
+              onChange={(e) => search(e.target.value)}
+              value={query.search}
             />
-            </SearchFieldWrapper>
           </SearchWrapper>
+
+          <ClearButton variant="contained" color="primary" onClick={() => dispatch({type: 'clearAll'})}>Clear All</ClearButton>
         </InputsWrapper>
       </ToolbarWrapper>
     </Toolbar>

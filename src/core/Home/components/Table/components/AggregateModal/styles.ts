@@ -21,11 +21,15 @@ export const StyledTableCell = styled(TableCell)`
 export const ModalHeadWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   margin-bottom: 30px;
-  border: 0.5px solid rgba(200, 200, 200, 0.4);
-  padding: 40px 15px 10px;
+  border-bottom: 0.5px solid rgba(200, 200, 200, 0.4);
+  padding: 15px 10px;
   font-size: 16px;
+
+  > h2 {
+    margin-right: 1rem;
+  }
 `
 
 export const StyledTableHead = styled(TableHead)`
