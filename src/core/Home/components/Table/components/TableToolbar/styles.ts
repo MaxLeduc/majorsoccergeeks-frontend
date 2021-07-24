@@ -1,12 +1,6 @@
 import styled from 'styled-components'
-import Toolbar from '@material-ui/core/Toolbar';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
-
-export const StyledToolbar = styled(Toolbar)`
-  display: flex;
-  justify-content: flex-end;
-`
 
 export const SearchFieldWrapper = styled.div`
   margin-right: 10px;
@@ -34,8 +28,33 @@ export const SearchWrapper = styled.div`
   align-items: flex-end;
 `
 
-export const ToolbarWrapper = styled.div`
+export const InputsWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
+`
+
+export const ToolbarWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+`
+
+export const SelectedWrapper = styled.div`
+  display: flex;
+`
+
+export const SelectedIndicator = styled.span`
+  display: block;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 1rem;
+  padding: 10px 15px;
+  background-color: rgba(245, 0, 87, 0.065);
+  border-radius: 5px;
+  margin-right: 10px;
+`
+
+export const SelectedButton = styled(Button)`
+
 `
