@@ -34,10 +34,12 @@ export const SearchWrapper = styled.div`
   display: flex;
   align-items: flex-end;
   height: 48px;
+  margin-right: 30px;
 
   @media (max-width: 800px) {
     margin-bottom: 25px;
     width: 100%;
+    margin-right: 0;
   }
 `
 
