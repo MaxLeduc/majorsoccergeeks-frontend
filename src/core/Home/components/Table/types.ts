@@ -31,3 +31,4 @@ export type EnhancedTableReducerActions =
   | {type: 'setClubFilter', payload: string}
   | {type: 'setPositionsFilter', payload: string}
   | {type: 'showAggregate', payload: boolean}
+  | {type: 'clearAll'}
