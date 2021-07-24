@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/static/css/main.3204ea06.chunk.css",
-    "main.js": "/static/js/main.198c7b1b.chunk.js",
-    "main.js.map": "/static/js/main.198c7b1b.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.d880e9d4.js",
-    "runtime-main.js.map": "/static/js/runtime-main.d880e9d4.js.map",
-    "static/js/2.8a8301d6.chunk.js": "/static/js/2.8a8301d6.chunk.js",
-    "static/js/2.8a8301d6.chunk.js.map": "/static/js/2.8a8301d6.chunk.js.map",
-    "static/js/3.551f4d99.chunk.js": "/static/js/3.551f4d99.chunk.js",
-    "static/js/3.551f4d99.chunk.js.map": "/static/js/3.551f4d99.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/main.3204ea06.chunk.css.map": "/static/css/main.3204ea06.chunk.css.map",
-    "static/js/2.8a8301d6.chunk.js.LICENSE.txt": "/static/js/2.8a8301d6.chunk.js.LICENSE.txt",
-    "static/media/hero.e9c7111b.jpeg": "/static/media/hero.e9c7111b.jpeg",
-    "static/media/soccer-ball.d31e0b4f.png": "/static/media/soccer-ball.d31e0b4f.png"
+    "main.css": "/www.majorsoccergeeks.com/static/css/main.3204ea06.chunk.css",
+    "main.js": "/www.majorsoccergeeks.com/static/js/main.198c7b1b.chunk.js",
+    "main.js.map": "/www.majorsoccergeeks.com/static/js/main.198c7b1b.chunk.js.map",
+    "runtime-main.js": "/www.majorsoccergeeks.com/static/js/runtime-main.6c020b41.js",
+    "runtime-main.js.map": "/www.majorsoccergeeks.com/static/js/runtime-main.6c020b41.js.map",
+    "static/js/2.d8737735.chunk.js": "/www.majorsoccergeeks.com/static/js/2.d8737735.chunk.js",
+    "static/js/2.d8737735.chunk.js.map": "/www.majorsoccergeeks.com/static/js/2.d8737735.chunk.js.map",
+    "static/js/3.551f4d99.chunk.js": "/www.majorsoccergeeks.com/static/js/3.551f4d99.chunk.js",
+    "static/js/3.551f4d99.chunk.js.map": "/www.majorsoccergeeks.com/static/js/3.551f4d99.chunk.js.map",
+    "index.html": "/www.majorsoccergeeks.com/index.html",
+    "static/css/main.3204ea06.chunk.css.map": "/www.majorsoccergeeks.com/static/css/main.3204ea06.chunk.css.map",
+    "static/js/2.d8737735.chunk.js.LICENSE.txt": "/www.majorsoccergeeks.com/static/js/2.d8737735.chunk.js.LICENSE.txt",
+    "static/media/hero.e9c7111b.jpeg": "/www.majorsoccergeeks.com/static/media/hero.e9c7111b.jpeg",
+    "static/media/soccer-ball.d31e0b4f.png": "/www.majorsoccergeeks.com/static/media/soccer-ball.d31e0b4f.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.d880e9d4.js",
-    "static/js/2.8a8301d6.chunk.js",
+    "static/js/runtime-main.6c020b41.js",
+    "static/js/2.d8737735.chunk.js",
     "static/css/main.3204ea06.chunk.css",
     "static/js/main.198c7b1b.chunk.js"
   ]
