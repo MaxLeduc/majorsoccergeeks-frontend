@@ -22,10 +22,14 @@ export const Head = styled.h1`
 
 export const HeroImage = styled.div`
   height: 40vh;
+  background-size: cover;
   background-image: url(${heroImage});
-  background-position: 40% 70%;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-position: center;
+
+  @media (max-width: 800px) {
+    height: 30vh;
+  }
 `
 
 export const SoccerBall = styled.img`
@@ -38,5 +42,8 @@ export const HeadWrapper = styled.div`
   max-width: 90%;
   margin-left: 30px;
   font-style: italic;
-  text-align: center;
+
+  @media (max-width: 800px) {
+    text-align: center;
+  }
 `

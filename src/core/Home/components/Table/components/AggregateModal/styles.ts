@@ -3,15 +3,15 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 
 export const ModalWrapper = styled.div`
-  width: 90%;
   background-color: white;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 20px;
-  max-height: 90vh;
+  max-height: 85vh;
   overflow: scroll;
+  width: 85%;
 `
 
 export const StyledTableCell = styled(TableCell)`

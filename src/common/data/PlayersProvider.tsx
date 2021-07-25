@@ -1,7 +1,5 @@
-import React, {ReactNode, createContext, useState, useEffect} from 'react'
+import React, {ReactNode, createContext, useState, useEffect, useContext} from 'react'
 import { useQuery } from 'urql'
-
-import {Loading} from '../../core/Loading'
 
 import {Player} from './types'
 
@@ -26,16 +24,21 @@ const PlayerQuery = `
 `
 
 interface PlayersContext {
-  players: Player[] | null,
-  setFilteredPlayers?: Function
+  players: Player[],
+  fetching: boolean
 }
 
-export const PlayerContext = createContext<PlayersContext>({players: null});
+export const PlayerContext = createContext<PlayersContext>({players: [] as Player[], fetching: false});
+
+export const usePlayersProvider = () => {
+  const value = useContext(PlayerContext)
+
+  return value
+}
 
 export const PlayersProvider = ({children}: {children: ReactNode}) => {
   const [res] = useQuery({query: PlayerQuery})
-  const [players, setPlayers] = useState(null)
-  const [filteredPlayers, setFilteredPlayers] = useState([])
+  const [players, setPlayers] = useState([])
 
   const {data, fetching, error} = res
 
@@ -45,11 +48,10 @@ export const PlayersProvider = ({children}: {children: ReactNode}) => {
     }
   }, [data])
 
-  if (fetching) return <Loading />;
   if (error) return <p>Oh no... {error.message}</p>;
 
   return (
-    <PlayerContext.Provider value={{players: filteredPlayers.length ? filteredPlayers : players, setFilteredPlayers}}>
+    <PlayerContext.Provider value={{players, fetching}}>
       {children}
     </PlayerContext.Provider>
   )
