@@ -7,6 +7,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import TablePagination from '@material-ui/core/TablePagination';
 
 import {Club, Player, Position} from '../../../../common/data/types'
+import {usePlayersProvider} from '../../../../common/data/PlayersProvider'
+import {Loading} from '../../../../common/components/Loading'
 
 import {EnhancedTableHead} from './components/TableHead'
 import {EnhancedTableToolbar} from './components/TableToolbar'
@@ -131,7 +133,8 @@ const EnhancedTableReducer = (state: EnhancedTableReducerState, action: Enhanced
 
 
 
-export const EnhancedTable = ({players}: {players: Player[]} ) => {
+export const EnhancedTable = () => {
+  const { players, fetching } = usePlayersProvider()
   const [{
     order,
     orderBy,
@@ -191,6 +194,8 @@ export const EnhancedTable = ({players}: {players: Player[]} ) => {
   const handleChangeRowsPerPage = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({type: 'setRowsPerPage', payload: { page: 0, rowsPerPage: parseInt(event.target.value, 10)}});
   }, [])
+
+  if (fetching) return <Loading />
 
   return (
     <>

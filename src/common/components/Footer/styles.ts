@@ -25,7 +25,13 @@ export const SocialWrapper = styled.div`
 `
 
 export const TwitterLink = styled.a`
- > img {
-   width: 20px;
- }
+  > img {
+    width: 20px;
+  }
+`
+
+export const MobileBottomNavOffset = styled.div`
+  @media (max-width: 800px) {
+  height: 60px;
+  }
 `

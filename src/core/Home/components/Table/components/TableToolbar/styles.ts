@@ -76,7 +76,15 @@ export const SelectedWrapper = styled.div`
   display: flex;
 
   @media (max-width: 1125px) {
-    margin-bottom: 10px;
+    justify-content: flex-end;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: white;
+    z-index: 99;
+    padding: 10px 20px;
+    border-top: 1px solid #EEEEEE;
   }
 `
 

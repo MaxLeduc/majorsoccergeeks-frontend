@@ -11,21 +11,23 @@ const rotate = keyframes`
 `;
 
 export const LoadingIcon = styled.img`
-  width: 100px;
+  width: 85px;
   animation: ${rotate} 2s linear infinite;
   margin-bottom: 10px;
 `
 
-export const IconWrapper = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+export const LoadingWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  height: 60vh;
 
   > p {
     text-align: center;
+  }
+
+  @media (max-width: 800px) {
+    height: 70vh;
   }
 `
