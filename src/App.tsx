@@ -12,7 +12,7 @@ function App() {
     <Provider value={graphqlClient}>
       <PlayersProvider>
         <Header />
-          <Home />
+        <Home />
         <Footer />
       </PlayersProvider>
     </Provider>
