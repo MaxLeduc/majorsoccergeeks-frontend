@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
 
-import {EnhancedTable} from './components/Table'
+import { EnhancedTable } from "./components/Table";
 
 const Home = () => {
-  return <>
-    <EnhancedTable />
-  </>
-}
+  return (
+    <>
+      <EnhancedTable />
+    </>
+  );
+};
 
-export default Home
+export default Home;

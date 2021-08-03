@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
+import styled from "styled-components";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
 
 export const ModalWrapper = styled.div`
   background-color: white;
@@ -12,11 +12,11 @@ export const ModalWrapper = styled.div`
   max-height: 85vh;
   overflow: scroll;
   width: 85%;
-`
+`;
 
 export const StyledTableCell = styled(TableCell)`
   text-transform: capitalize;
-`
+`;
 
 export const ModalHeadWrapper = styled.div`
   display: flex;
@@ -30,12 +30,12 @@ export const ModalHeadWrapper = styled.div`
   > h2 {
     margin-right: 1rem;
   }
-`
+`;
 
 export const StyledTableHead = styled(TableHead)`
   background-color: #f50057;
-`
+`;
 
 export const StyledTableHeadCell = styled(TableCell)`
   color: white !important;
-`
+`;

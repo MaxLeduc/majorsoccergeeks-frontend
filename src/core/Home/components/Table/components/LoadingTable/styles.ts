@@ -13,7 +13,7 @@ const loadingCell = keyframes`
     background-position: 0% 0%;
   }
 
-` 
+`;
 
 export const Loading = styled.div`
   width: 100%;
@@ -21,4 +21,4 @@ export const Loading = styled.div`
   background: linear-gradient(270deg, #fff, #777);
   animation: ${loadingCell} 1s ease infinite;
   background-size: 500% 100%;
-`
+`;

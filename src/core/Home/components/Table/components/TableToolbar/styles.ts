@@ -1,7 +1,7 @@
-import styled from 'styled-components'
-import FormControl from '@material-ui/core/FormControl';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import styled from "styled-components";
+import FormControl from "@material-ui/core/FormControl";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 
 export const StyledFormControl = styled(FormControl)`
   min-width: 150px !important;
@@ -10,7 +10,7 @@ export const StyledFormControl = styled(FormControl)`
   @media (max-width: 800px) {
     width: 100%;
   }
-`
+`;
 
 export const DropdownWrapper = styled.div`
   margin-right: 30px;
@@ -22,13 +22,13 @@ export const DropdownWrapper = styled.div`
     width: 100%;
     margin-right: 0;
   }
-`
+`;
 
 export const ClearButton = styled(Button)`
   font-size: 10px !important;
   padding: 5px 10px !important;
   min-width: unset !important;
-`
+`;
 
 export const SearchWrapper = styled.div`
   display: flex;
@@ -41,7 +41,7 @@ export const SearchWrapper = styled.div`
     width: 100%;
     margin-right: 0;
   }
-`
+`;
 
 export const InputsWrapper = styled.div`
   display: flex;
@@ -53,7 +53,7 @@ export const InputsWrapper = styled.div`
     align-items: flex-start;
     width: 100%;
   }
-`
+`;
 
 export const ToolbarWrapper = styled.div`
   display: flex;
@@ -70,7 +70,7 @@ export const ToolbarWrapper = styled.div`
   @media (max-width: 800px) {
     align-items: flex-start;
   }
-`
+`;
 
 export const SelectedWrapper = styled.div`
   display: flex;
@@ -84,9 +84,9 @@ export const SelectedWrapper = styled.div`
     background-color: white;
     z-index: 99;
     padding: 10px 20px;
-    border-top: 1px solid #EEEEEE;
+    border-top: 1px solid #eeeeee;
   }
-`
+`;
 
 export const SelectedIndicator = styled.span`
   display: block;
@@ -96,12 +96,12 @@ export const SelectedIndicator = styled.span`
   background-color: rgba(245, 0, 87, 0.065);
   border-radius: 5px;
   margin-right: 10px;
-`
+`;
 
-export const SelectedButton = styled(Button)``
+export const SelectedButton = styled(Button)``;
 
 export const StyledTextField = styled(TextField)`
   @media (max-width: 800px) {
     width: 100%;
   }
-`
+`;

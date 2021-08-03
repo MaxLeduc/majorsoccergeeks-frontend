@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export const FilterIconHiddenLabel = styled.span`
   border: 0;
@@ -10,4 +10,4 @@ export const FilterIconHiddenLabel = styled.span`
   position: absolute;
   top: 20;
   width: 1;
-`
+`;
