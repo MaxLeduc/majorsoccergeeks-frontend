@@ -1,7 +1,13 @@
-import React, {ReactNode, createContext, useState, useEffect, useContext} from 'react'
-import { useQuery } from 'urql'
+import React, {
+  ReactNode,
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+} from "react";
+import { useQuery } from "urql";
 
-import {Player} from './types'
+import { Player } from "./types";
 
 const PlayerQuery = `
   query {
@@ -21,38 +27,41 @@ const PlayerQuery = `
       }
     }
   }
-`
+`;
 
 interface PlayersContext {
-  players: Player[],
-  fetching: boolean
+  players: Player[];
+  fetching: boolean;
 }
 
-export const PlayerContext = createContext<PlayersContext>({players: [] as Player[], fetching: false});
+export const PlayerContext = createContext<PlayersContext>({
+  players: [] as Player[],
+  fetching: false,
+});
 
 export const usePlayersProvider = () => {
-  const value = useContext(PlayerContext)
+  const value = useContext(PlayerContext);
 
-  return value
-}
+  return value;
+};
 
-export const PlayersProvider = ({children}: {children: ReactNode}) => {
-  const [res] = useQuery({query: PlayerQuery})
-  const [players, setPlayers] = useState([])
+export const PlayersProvider = ({ children }: { children: ReactNode }) => {
+  const [res] = useQuery({ query: PlayerQuery });
+  const [players, setPlayers] = useState([]);
 
-  const {data, fetching, error} = res
+  const { data, fetching, error } = res;
 
   useEffect(() => {
     if (data && data.players) {
-      setPlayers(data.players)
+      setPlayers(data.players);
     }
-  }, [data])
+  }, [data]);
 
   if (error) return <p>Oh no... {error.message}</p>;
 
   return (
-    <PlayerContext.Provider value={{players, fetching}}>
+    <PlayerContext.Provider value={{ players, fetching }}>
       {children}
     </PlayerContext.Provider>
-  )
-}
+  );
+};

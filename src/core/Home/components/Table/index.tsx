@@ -1,213 +1,260 @@
-import React, { useReducer, useCallback, useMemo, useEffect } from 'react'
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableRow from '@material-ui/core/TableRow';
-import Checkbox from '@material-ui/core/Checkbox';
-import TablePagination from '@material-ui/core/TablePagination';
+import React, { useReducer, useCallback, useMemo, useEffect } from "react";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableRow from "@material-ui/core/TableRow";
+import Checkbox from "@material-ui/core/Checkbox";
+import TablePagination from "@material-ui/core/TablePagination";
 
-import {Club, Player, Position} from '../../../../common/data/types'
-import {usePlayersProvider} from '../../../../common/data/PlayersProvider'
+import { Club, Player, Position } from "../../../../common/data/types";
+import { usePlayersProvider } from "../../../../common/data/PlayersProvider";
 
-import {LoadingTable} from './components/LoadingTable'
-import {EnhancedTableHead} from './components/TableHead'
-import {EnhancedTableToolbar} from './components/TableToolbar'
-import {AggregateModal} from './components/AggregateModal'
-import {TableWrapper, StyledPaper, StyledTable} from './styles'
-import {EnhancedTableReducerActions, EnhancedTableReducerState, Order} from './types'
-import {currencyFormatter, getComparator, getClubUrl, getPlayerUrl, stableSort, getFilteredPlayers} from './helpers'
+import { LoadingTable } from "./components/LoadingTable";
+import { EnhancedTableHead } from "./components/TableHead";
+import { EnhancedTableToolbar } from "./components/TableToolbar";
+import { AggregateModal } from "./components/AggregateModal";
+import { TableWrapper, StyledPaper, StyledTable } from "./styles";
+import {
+  EnhancedTableReducerActions,
+  EnhancedTableReducerState,
+  Order,
+} from "./types";
+import {
+  currencyFormatter,
+  getComparator,
+  getClubUrl,
+  getPlayerUrl,
+  stableSort,
+  getFilteredPlayers,
+} from "./helpers";
 
-const DEFAULT_ROWS_PER_PAGE = 25
+const DEFAULT_ROWS_PER_PAGE = 25;
 
 const EnhancedTableInitialState = {
   players: [] as Player[],
-  order: 'asc' as Order,
-  orderBy: 'id' as keyof Player,
+  order: "asc" as Order,
+  orderBy: "id" as keyof Player,
   selected: [] as string[],
   page: 0,
   rowsPerPage: DEFAULT_ROWS_PER_PAGE,
   query: {
-    search: '',
-    clubFilter: '',
-    positionFilter: ''
+    search: "",
+    clubFilter: "",
+    positionFilter: "",
   },
   clubs: new Map() as Map<string, Club>,
   positions: new Map() as Map<string, Position>,
-  showAggregate: false
-}
+  showAggregate: false,
+};
 
-const EnhancedTableReducer = (state: EnhancedTableReducerState, action: EnhancedTableReducerActions) => {
+const EnhancedTableReducer = (
+  state: EnhancedTableReducerState,
+  action: EnhancedTableReducerActions
+) => {
   switch (action.type) {
-    case 'setPlayers':
-      const clubs = new Map()
-      const positions = new Map()
+    case "setPlayers":
+      const clubs = new Map();
+      const positions = new Map();
 
-      action.payload.forEach(player => {
-        const {club, positions: playerPositions} = player
+      action.payload.forEach((player) => {
+        const { club, positions: playerPositions } = player;
 
         if (!clubs.get(club.name)) {
-          clubs.set(club.name, club)
+          clubs.set(club.name, club);
         }
 
-        playerPositions.forEach(position => {
+        playerPositions.forEach((position) => {
           if (!positions.get(position.name)) {
-            positions.set(position.name, position)
+            positions.set(position.name, position);
           }
-        })
-      })
+        });
+      });
 
       return {
         ...state,
         players: action.payload,
         clubs,
-        positions
-      }
-    case 'setOrder':
+        positions,
+      };
+    case "setOrder":
       return {
         ...state,
         order: action.payload.order,
-        orderBy: action.payload.orderBy
-      }
-    case 'setSelected':
+        orderBy: action.payload.orderBy,
+      };
+    case "setSelected":
       return {
         ...state,
-        selected: action.payload
-      }
-    case 'setPage':
+        selected: action.payload,
+      };
+    case "setPage":
       return {
         ...state,
-        page: action.payload
-      }
-    case 'setRowsPerPage':
+        page: action.payload,
+      };
+    case "setRowsPerPage":
       return {
         ...state,
         page: action.payload.page,
-        rowsPerPage: action.payload.rowsPerPage
-      }
-    case 'setSearch':
+        rowsPerPage: action.payload.rowsPerPage,
+      };
+    case "setSearch":
       return {
         ...state,
         page: 0,
         query: {
           ...state.query,
-          search: action.payload
-        }
-      }
-    case 'setClubFilter':
-      return {
-        ...state,
-        page: 0,
-        query: {
-          ...state.query,
-          clubFilter: action.payload
-        }
-      }
-    case 'setPositionsFilter':
-      return {
-        ...state,
-        page: 0,
-        query: {
-          ...state.query,
-          positionFilter: action.payload
-        }
-      }
-    case 'showAggregate':
-      return {
-        ...state,
-        showAggregate: action.payload
-      }
-    case 'clearAll':
-      return {
-        ...state,
-        query:  {
-          search: '',
-          clubFilter: '',
-          positionFilter: ''
+          search: action.payload,
         },
-        selected: []
-      }
+      };
+    case "setClubFilter":
+      return {
+        ...state,
+        page: 0,
+        query: {
+          ...state.query,
+          clubFilter: action.payload,
+        },
+      };
+    case "setPositionsFilter":
+      return {
+        ...state,
+        page: 0,
+        query: {
+          ...state.query,
+          positionFilter: action.payload,
+        },
+      };
+    case "showAggregate":
+      return {
+        ...state,
+        showAggregate: action.payload,
+      };
+    case "clearAll":
+      return {
+        ...state,
+        query: {
+          search: "",
+          clubFilter: "",
+          positionFilter: "",
+        },
+        selected: [],
+      };
     default:
-      return state
-  }  
-}
-
-
+      return state;
+  }
+};
 
 export const EnhancedTable = () => {
-  const { players, fetching } = usePlayersProvider()
-  const [{
-    order,
-    orderBy,
-    selected,
-    page,
-    rowsPerPage,
-    query,
-    clubs,
-    positions,
-    showAggregate
-  }, dispatch] = useReducer(EnhancedTableReducer, EnhancedTableInitialState)
-  const playersToDisplay = useMemo(() => stableSort(players, getComparator(order, orderBy)).filter(player => getFilteredPlayers(player, query)), [order, orderBy, players, query])
+  const { players, fetching } = usePlayersProvider();
+  const [
+    {
+      order,
+      orderBy,
+      selected,
+      page,
+      rowsPerPage,
+      query,
+      clubs,
+      positions,
+      showAggregate,
+    },
+    dispatch,
+  ] = useReducer(EnhancedTableReducer, EnhancedTableInitialState);
+  const playersToDisplay = useMemo(
+    () =>
+      stableSort(players, getComparator(order, orderBy)).filter((player) =>
+        getFilteredPlayers(player, query)
+      ),
+    [order, orderBy, players, query]
+  );
 
   useEffect(() => {
-    dispatch({type: 'setPlayers', payload: players})
-  }, [players])
+    dispatch({ type: "setPlayers", payload: players });
+  }, [players]);
 
-  const handleRequestSort = useCallback((event: React.MouseEvent<unknown>, property: keyof Player) => {
-    const isAsc = orderBy === property && order === 'asc';
-    dispatch({type: 'setOrder', payload: { order: isAsc ? 'desc' : 'asc', orderBy: property }});
-  }, [order, orderBy])
+  const handleRequestSort = useCallback(
+    (event: React.MouseEvent<unknown>, property: keyof Player) => {
+      const isAsc = orderBy === property && order === "asc";
+      dispatch({
+        type: "setOrder",
+        payload: { order: isAsc ? "desc" : "asc", orderBy: property },
+      });
+    },
+    [order, orderBy]
+  );
 
-  const handleSelectAllClick = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.checked)
-    if (event.target.checked) {
-      const newSelecteds = playersToDisplay.map((n) => n.id);
-      dispatch({type: 'setSelected', payload: newSelecteds});
-      return;
-    }
-    dispatch({type: 'setSelected', payload: []});
-  }, [playersToDisplay])
+  const handleSelectAllClick = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      console.log(event.target.checked);
+      if (event.target.checked) {
+        const newSelecteds = playersToDisplay.map((n) => n.id);
+        dispatch({ type: "setSelected", payload: newSelecteds });
+        return;
+      }
+      dispatch({ type: "setSelected", payload: [] });
+    },
+    [playersToDisplay]
+  );
 
-  const selectRow = useCallback((id: string) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected: string[] = [];
+  const selectRow = useCallback(
+    (id: string) => {
+      const selectedIndex = selected.indexOf(id);
+      let newSelected: string[] = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
+      if (selectedIndex === -1) {
+        newSelected = newSelected.concat(selected, id);
+      } else if (selectedIndex === 0) {
+        newSelected = newSelected.concat(selected.slice(1));
+      } else if (selectedIndex === selected.length - 1) {
+        newSelected = newSelected.concat(selected.slice(0, -1));
+      } else if (selectedIndex > 0) {
+        newSelected = newSelected.concat(
+          selected.slice(0, selectedIndex),
+          selected.slice(selectedIndex + 1)
+        );
+      }
 
-    dispatch({type: 'setSelected', payload: newSelected});
-  }, [selected])
+      dispatch({ type: "setSelected", payload: newSelected });
+    },
+    [selected]
+  );
 
   const handleChangePage = useCallback((event: unknown, newPage: number) => {
-    dispatch({type: 'setPage', payload: newPage});
-  }, [])
+    dispatch({ type: "setPage", payload: newPage });
+  }, []);
 
-  const handleChangeRowsPerPage = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({type: 'setRowsPerPage', payload: { page: 0, rowsPerPage: parseInt(event.target.value, 10)}});
-  }, [])
+  const handleChangeRowsPerPage = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch({
+        type: "setRowsPerPage",
+        payload: { page: 0, rowsPerPage: parseInt(event.target.value, 10) },
+      });
+    },
+    []
+  );
 
-  if (fetching) return <LoadingTable />
+  if (fetching) return <LoadingTable />;
 
   return (
     <>
-      {showAggregate && <AggregateModal 
-        showAggregate={showAggregate}
-        selected={selected}
-        players={players}
-        closeModal={() => dispatch({type: 'showAggregate', payload: false})}
-      />}
+      {showAggregate && (
+        <AggregateModal
+          showAggregate={showAggregate}
+          selected={selected}
+          players={players}
+          closeModal={() => dispatch({ type: "showAggregate", payload: false })}
+        />
+      )}
       <TableWrapper>
         <StyledPaper>
-          <EnhancedTableToolbar selected={selected} dispatch={dispatch} query={query} clubs={clubs} positions={positions} />
+          <EnhancedTableToolbar
+            selected={selected}
+            dispatch={dispatch}
+            query={query}
+            clubs={clubs}
+            positions={positions}
+          />
           <TableContainer>
             <StyledTable
               stickyHeader
@@ -223,7 +270,8 @@ export const EnhancedTable = () => {
                 rowCount={playersToDisplay.length}
               />
               <TableBody>
-                {playersToDisplay.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                {playersToDisplay
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row: Player, index: number) => {
                     const isItemSelected = selected.indexOf(row.id) !== -1;
                     const labelId = `enhanced-table-checkbox-${index}`;
@@ -233,8 +281,8 @@ export const EnhancedTable = () => {
                       baseSalary,
                       guaranteedCompensation,
                       club,
-                      positions: playerPositions
-                    } = row
+                      positions: playerPositions,
+                    } = row;
 
                     return (
                       <TableRow
@@ -248,19 +296,37 @@ export const EnhancedTable = () => {
                         <TableCell padding="checkbox">
                           <Checkbox
                             checked={isItemSelected}
-                            inputProps={{ 'aria-labelledby': labelId }}
+                            inputProps={{ "aria-labelledby": labelId }}
                             onClick={() => selectRow(row.id)}
                           />
                         </TableCell>
                         <TableCell align="right" id={labelId} scope="row">
-                          <a rel="noopener noreferrer" target="_blank" href={getPlayerUrl(firstName, lastName)}>{firstName} {lastName}</a>
+                          <a
+                            rel="noopener noreferrer"
+                            target="_blank"
+                            href={getPlayerUrl(firstName, lastName)}
+                          >
+                            {firstName} {lastName}
+                          </a>
                         </TableCell>
-                        <TableCell align="right">{`${currencyFormatter.format(baseSalary)}`}</TableCell>
-                        <TableCell align="right">{`${currencyFormatter.format(guaranteedCompensation)}`}</TableCell>
+                        <TableCell align="right">{`${currencyFormatter.format(
+                          baseSalary
+                        )}`}</TableCell>
+                        <TableCell align="right">{`${currencyFormatter.format(
+                          guaranteedCompensation
+                        )}`}</TableCell>
                         <TableCell align="right">
-                          <a rel="noopener noreferrer" target="_blank" href={getClubUrl(club.name)}>{club.name}</a>
+                          <a
+                            rel="noopener noreferrer"
+                            target="_blank"
+                            href={getClubUrl(club.name)}
+                          >
+                            {club.name}
+                          </a>
                         </TableCell>
-                        <TableCell align="right">{playerPositions.map(({name}) => name).join(', ')}</TableCell>
+                        <TableCell align="right">
+                          {playerPositions.map(({ name }) => name).join(", ")}
+                        </TableCell>
                       </TableRow>
                     );
                   })}
@@ -280,4 +346,4 @@ export const EnhancedTable = () => {
       </TableWrapper>
     </>
   );
-}
+};

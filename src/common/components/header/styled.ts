@@ -1,10 +1,10 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
-import heroImage from './assets/hero.jpeg'
+import heroImage from "./assets/hero.jpeg";
 
 export const StyledHeader = styled.div`
   background-color: #3f51b5;
-`
+`;
 
 export const Head = styled.h1`
   margin-top: 15px;
@@ -18,7 +18,7 @@ export const Head = styled.h1`
   > span {
     font-size: 1rem;
   }
-`
+`;
 
 export const HeroImage = styled.div`
   height: 40vh;
@@ -30,13 +30,13 @@ export const HeroImage = styled.div`
   @media (max-width: 800px) {
     height: 30vh;
   }
-`
+`;
 
 export const SoccerBall = styled.img`
   width: 20px;
   background-color: white;
   border-radius: 10px;
-`
+`;
 
 export const HeadWrapper = styled.div`
   max-width: 90%;
@@ -46,4 +46,4 @@ export const HeadWrapper = styled.div`
   @media (max-width: 800px) {
     text-align: center;
   }
-`
+`;
