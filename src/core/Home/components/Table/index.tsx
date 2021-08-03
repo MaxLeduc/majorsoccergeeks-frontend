@@ -8,8 +8,8 @@ import TablePagination from '@material-ui/core/TablePagination';
 
 import {Club, Player, Position} from '../../../../common/data/types'
 import {usePlayersProvider} from '../../../../common/data/PlayersProvider'
-import {Loading} from '../../../../common/components/Loading'
 
+import {LoadingTable} from './components/LoadingTable'
 import {EnhancedTableHead} from './components/TableHead'
 import {EnhancedTableToolbar} from './components/TableToolbar'
 import {AggregateModal} from './components/AggregateModal'
@@ -195,7 +195,7 @@ export const EnhancedTable = () => {
     dispatch({type: 'setRowsPerPage', payload: { page: 0, rowsPerPage: parseInt(event.target.value, 10)}});
   }, [])
 
-  if (fetching) return <Loading />
+  if (fetching) return <LoadingTable />
 
   return (
     <>
