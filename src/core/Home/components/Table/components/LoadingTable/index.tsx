@@ -6,35 +6,38 @@ import TableRow from "@material-ui/core/TableRow";
 
 import { TableWrapper, StyledPaper, StyledTable } from "../../styles";
 
-import { Loading } from "./styles";
+import { Loading, LoadingWrapper, LoadingText } from "./styles";
 
 export const LoadingTable = () => {
   const columns = new Array(4).fill(undefined);
-  const rows = new Array(4).fill(undefined);
+  const rows = new Array(3).fill(undefined);
 
   return (
-    <TableWrapper>
-      <StyledPaper>
-        <TableContainer>
-          <StyledTable>
-            <TableBody>
-              {rows.map(() => {
-                return (
-                  <TableRow>
-                    {columns.map(() => {
-                      return (
-                        <TableCell>
-                          <Loading />
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </StyledTable>
-        </TableContainer>
-      </StyledPaper>
-    </TableWrapper>
+    <LoadingWrapper>
+      <LoadingText>Loading players...</LoadingText>
+      <TableWrapper>
+        <StyledPaper>
+          <TableContainer>
+            <StyledTable>
+              <TableBody>
+                {rows.map(() => {
+                  return (
+                    <TableRow>
+                      {columns.map(() => {
+                        return (
+                          <TableCell>
+                            <Loading />
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </StyledTable>
+          </TableContainer>
+        </StyledPaper>
+      </TableWrapper>
+    </LoadingWrapper>
   );
 };

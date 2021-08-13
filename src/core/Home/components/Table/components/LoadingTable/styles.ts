@@ -2,15 +2,11 @@ import styled, { keyframes } from "styled-components";
 
 const loadingCell = keyframes`
   0% {
-    background-position: 0% 0%;
-  }
-  
-  50%{
-    background-position: 100% 0%;
+    border: 1px solid grey;
   }
 
   100%{
-    background-position: 0% 0%;
+    border: 1px solid white;
   }
 
 `;
@@ -18,7 +14,16 @@ const loadingCell = keyframes`
 export const Loading = styled.div`
   width: 100%;
   height: 30px;
-  background: linear-gradient(270deg, #fff, #777);
-  animation: ${loadingCell} 1s ease infinite;
-  background-size: 500% 100%;
+  animation: ${loadingCell} 1.5s ease infinite;
+`;
+
+export const LoadingWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 60vh;
+`;
+
+export const LoadingText = styled.div`
+  margin-top: 50px;
 `;
